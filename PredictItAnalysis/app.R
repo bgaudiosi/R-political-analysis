@@ -11,6 +11,7 @@ require(shiny)
 require(shinydashboard)
 require(fiftystater)
 require(dplyr)
+require(mapproj)
 require(ggplot2)
 
 
@@ -203,7 +204,7 @@ server <- function(input, output) {
   me_thoughts <- paste("One of two independents in the U.S. Senate, one term Senator Angus King was last elected in a three way race with 53% of the vote in 2012.",
                        "Angus King caucuses with the Democrats. Given Hillary Clinton won Maine in 2016, it's unlikely he will lose this race.")
   md_thoughts <- paste("Ben Cardin is a two term Senator who was elected with 56% of the vote in 2012. This is a relatively uncompetitive seat and will almost certainly remain held by the incumbent Senator.")
-  ma_thoughts <- paste("A former Harvard Law professor, Elizabeth Warren is a one term Senator who was elected with 54% of the vote in 2012, defeating Republican Scott Brown after his surprise victory in the Massachusetts U.S. Senate special election in 2010",
+  ma_thoughts <- paste("A former Harvard Law professor, Elizabeth Warren is a one term Senator who was elected with 54% of the vote in 2012, defeating Republican Scott Brown after his surprise victory in the Massachusetts U.S. Senate special election in 2010.",
                        "Known for her outspoken stances on bank regulations, she fits the mold for her state and faces few serious competitors and will likely be reelected this Fall.")
   mi_thoughts <- paste("Incumbent Senator Debbie Stabenow is a three term Senator who was elected with 59% of the vote. She is one of the ten Democrats running in states won by Donald Trump in 2016.",
                        "However, luckily for her, Michigan the state Donald Trump won with his smallest margin of victory, so she will likely be reelected this Fall.")
@@ -220,7 +221,7 @@ server <- function(input, output) {
   mo_thoughts <- paste("Considered the most vulnerable incumbent Democrat this fall, two term Senator Claire McCaskill has quite the battle ahead of her this fall in a state Trump won by over 20%. ",
                        "Her first victory was in the Democratic wave of 2006. In 2012, she was quite the underdog, but following her opponent's comment about how the \"female body shuts down legitimate rape,\" she soared to victory.",
                        "This year, she faces Missouri Attorney General Josh Hawley, a fierce opponent. However, she may have luck on her side once again with the scandal embroiling the Missouri Governor's office likely to help her out this fall.")
-  mt_thoughts <- paste("Jon Tester is vulneable incumbent who recently came under fire from President Trump for tanking his VA nominee Ronny Jackson. However, Jon Tester is popular in his state, which has a track record of bipartisanship, voting for both Donald Trump and a Democratic governor in 2016.")
+  mt_thoughts <- paste("Jon Tester is vulnerable incumbent who recently came under fire from President Trump for tanking his VA nominee Ronny Jackson. However, Jon Tester is popular in Montana, which has a track record of bipartisanship  voting for both Donald Trump and a Democratic governor in 2016.")
   ne_thoughts <- paste("After being elected to her first term in 2012, Deb Fischer replaced a Democrat. It's extremely unlikely she'll be losing this fall.")
   nv_thoughts <- paste("Considered the most vulnerable Republican incumbent, Dean Heller has quite a battle ahead of him as the only Republican Senate candidate in from a state won by Hillary Clinton in 2016. He faces Representative Jacky Rosen. If Democrats want to take the Senate, winning this seat is a must.")
   nj_thoughts <- paste("After his mistrial for corruption charges last year, many questioned Bob Menendez was out for the count. In a more Republican friendly year, he may have been, but he will more likely cruise to reelection this fall in the current this current environment that favors Democrats.")
@@ -232,14 +233,14 @@ server <- function(input, output) {
   ri_thoughts <- paste("Sheldon Whitehouse is a two term Senator who won his last election with 64% of the vote. This is a relatively uncompetitve election and will likey be won by the incumbent.")
   tn_thoughts <- paste("After Bob Corker announced his retirement, Republican Representative Marsha Blackburn hopped into the race. Originally, her victory was assured as Tennessee voted for Donald Trump by a large margin.",
                        "However, popular former Governor Phil Bredesen hopped in, and polling has showed it to be a close race. This will be a key race to determine control of the Senate.")
-  tx_thoughts <- paste("Ted Cruz, one of America's most hateable Senator, was is likely to cruise to reelection this fall, but he does face a formidable challenger, Representative Beto O'Rourke. In a wave election, this is a possible pickup for Democrats, though it will be quite difficult.")
+  tx_thoughts <- paste("Ted Cruz, one of America's most hateable Senators, is likely to cruise to reelection this fall, but he does face a formidable challenger, Representative Beto O'Rourke. In a wave election, this is a possible pickup for Democrats, though it will be quite difficult.")
   ut_thoughts <- paste("Following Senator Orrin Hatch announcing his retirment, this seat opened up, but not really as a pickup opportunity for Democrats. Former Massachusetts governor and presidential candidate Mitt Romney is poised to win the GOP nomination for the Senate, after which he will likely cruise to victory this fall.")
   vt_thoughts <- paste("Bernie Sanders, one of two independents in the U.S. Senate, is up for reelection following his loss in the 2016 Democratic Primary for the presidency.",
                        "Considered one of the most popular politicians in America, he won his last race with 71% of the vote and will likely win again this fall.")
   va_thoughts <- paste("The former Democratic Vice Presidential Nominee is up for reelection this year, and though Hillary Clinton's victory in this state in 2016 was close, the margins widened in the 2017 gubernatorial election, so Tim Kaine has little to fear this coming fall.")
   wa_thoughts <- paste("Maria Cantwell is a three term Senator who won her last election with 61% of the vote. She received an electoral vote in the 2016 presidential from a faithless Washington elector, and will likely be reelected again this fall considering how much Washington has swung left in recent years.")
   wv_thoughts <- paste("Joe Manchin is running for reelection in a state Trump won with 68% of the vote, so this will be a tough seat for Democrats to defend. However, a chaotic GOP primary and the fact that Joe Manchin remains popular in his state means there is still hope for the incumbent Senator.")
-  wi_thoughts <- paste("As the hearts of some millions raised and some millions dropped on election day 2016 when Wisconsin was called for Donald Trump, few likely felt it as hard as U.S. Senator Tammy Baldwin. She is first openly gay Senator in U.S. history and votes with her concurrently serving Senator Ron Johnson less than any other pair of U.S. Senators from a state. Still, Donald Trump's marign in 2016 was small, and if Democrats want any hope of taking the Senate this year, this is a must win seat that they will likely retain.")
+  wi_thoughts <- paste("As the hearts of some millions raised and some millions dropped on election day 2016 when Wisconsin was called for Donald Trump, few likely felt it as hard as U.S. Senator Tammy Baldwin. She is first openly gay Senator in U.S. history and votes with her concurrently serving Senator Ron Johnson less than any other pair of U.S. Senators from a state. Still, Donald Trump's margin in 2016 was small, and if Democrats want any hope of taking the Senate this year, this is a must win seat that they will likely retain.")
   wy_thoughts <- paste("John Barrasso is a one term Senator who was last elected with 76% of the vote. Coming from the state Donald Trump won by his largest margin, it is almost guaranteed John Barrasso will be reelected this fall.")
   thoughts <- c(az_thoughts, ca_thoughts, ct_thoughts, de_thoughts, fl_thoughts, hi_thoughts, in_thoughts, me_thoughts,  md_thoughts,  ma_thoughts, mi_thoughts, mn_special_thoughts,mn_thoughts, ms_special_thoughts, ms_thoughts, mo_thoughts, mt_thoughts, ne_thoughts, nv_thoughts, nj_thoughts, nm_thoughts, ny_thoughts, nd_thoughts,  oh_thoughts,pa_thoughts,ri_thoughts,tn_thoughts,tx_thoughts,ut_thoughts,vt_thoughts,  va_thoughts,wa_thoughts,  wv_thoughts, wi_thoughts, wy_thoughts)
   
